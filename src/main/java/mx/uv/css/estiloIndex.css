@@ -1,0 +1,25 @@
+#navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+#buscar {
+    width: 25%;
+}
+
+.divisor nav {
+    float: left;
+}
+
+.divisor nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 1em;
+}
+
+.divisor section {
+    display: table-row;
+}
