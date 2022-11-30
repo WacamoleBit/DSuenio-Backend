@@ -5,21 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/crearCuenta.css">
+    <script src="../../controller/script/crearCuenta.js" defer></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Crear Cuenta</title>
 </head>
 <body>
     <div id="contenedor">
-        <form>
+        <form action="">
             <label for="usuario">Nombre de usuario:</label>
-            <input type="text" name="usuario" id="usuario" placeholder="Nombre de usuario"> 
+            <input type="text" name="Usuario" id="usuario" placeholder="Nombre de usuario"> 
+
             <label for="contraseña">Contraseña:</label>
-            <input type="password" name="contraseña" id="contraseña" placeholder="Contraseña">
+            <input type="password" name="Contraseña" id="contraseña" placeholder="Contraseña">
+
             <label for="recontraseña">Repetir contraseña</label>
-            <input type="password" name="recontraseña" id="recontraseña" placeholder="Repetir contraseña">
-            <label for="">Correo Electronico:</label>
-            <input type="text" name="email" id="email" placeholder="Correo electrónico">
+            <input type="password" name="Recontraseña" id="recontraseña" placeholder="Repetir contraseña">
+
+            <label for="email">Correo Electronico:</label>
+            <input type="text" name="Email" id="email" placeholder="Correo electrónico">
+
             <label for="crearCuenta"></label>
-            <button type="button" id="iniciarSesion">Crear Cuenta</button>
+            <button type="button" id="crearCuenta">Crear Cuenta</button>
         </form>
 </body>
 </html>
