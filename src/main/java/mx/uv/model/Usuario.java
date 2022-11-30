@@ -1,13 +1,18 @@
 package mx.uv.model;
 
 public class Usuario {
-    private int idUsuario;
-    private String usuario;
-    private String contrasenia;
-    private String email;
+    private int idUsuario = 0;
+    private String usuario = null;
+    private String contrasenia = null;
+    private String email = null;
 
-    public void setIdUsuario(int idUsuario) {
+    public Usuario() {}
+
+    public Usuario (int idUsuario, String usuario, String contrasenia, String email) {
         this.idUsuario = idUsuario;
+        this.usuario = usuario;
+        this.contrasenia = contrasenia;
+        this.email = email;
     }
 
     public int getIdUsuario() {

@@ -8,25 +8,24 @@ import mx.uv.model.Usuario;
 public class UsuarioDAO {
     private Conexion miConn = new Conexion();
 
-    public String crearUsuario(Usuario u) {
+    public boolean crearUsuario(Usuario usuario) {
         PreparedStatement stm = null;
         Connection conn = miConn.getConnection();
-        String msj = "";
+        
+        boolean exito = false;
 
         try{
-            String sql = "INSERT INTO usuario (id, usuario, contrasenia, email) vaues (?,?,?,?)";
+            String sql = "INSERT INTO usuario (usuario, contrasenia, email) values (?, ?, ?);";
             stm = conn.prepareStatement(sql);
-            stm.setInt(1, u.getIdUsuario());
-            stm.setString(2, u.getUsuario());
-            stm.setString(3, u.getContrasenia());
-            stm.setString(4, u.getContrasenia());
+            stm.setString(1, usuario.getUsuario());
+            stm.setString(2, usuario.getContrasenia());
+            stm.setString(3, usuario.getEmail());
 
             if(stm.executeUpdate() > 0) {
-                msj = "Usuario creado";
-            } else {
-                msj = "Imposible crear usuario";
+                exito = true;
             }
         } catch (Exception e) {
+            System.out.println(e);
 
         } finally {
             if (stm != null) {
@@ -43,6 +42,6 @@ public class UsuarioDAO {
                 System.out.println(e);
             }
         }
-        return msj;
+        return exito;
     }
 }

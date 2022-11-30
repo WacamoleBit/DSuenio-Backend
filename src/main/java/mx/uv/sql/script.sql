@@ -7,7 +7,7 @@ create table usuario(
     usuario varchar(30) not null, 
     contrasenia varchar(30) not null,
     email varchar(50) not null,
-    primary key (usuario)
+    primary key (idUsuario)
 );
 
 create table sensaciondescanso (
@@ -26,5 +26,11 @@ create table entrada (
     aDestacar varchar(120),
     primary key (idEntrada),
     foreign key (sensacionDescanso) references sensaciondescanso(idSD),
-    foreign key (usuario) references usuario(usuario)
+    foreign key (usuario) references usuario(idUsuario)
 );
+
+create user 'dsadmin'@'localhost' identified  by 'dsadmin_PW';
+
+grant all privileges on dsuenio.* to 'dsadmin'@'localhost';
+
+flush privileges;
