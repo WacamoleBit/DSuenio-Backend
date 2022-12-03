@@ -1,10 +1,9 @@
-package mx.uv.controller.db;
+package mx.uv.model.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import mx.uv.model.Usuario;
 

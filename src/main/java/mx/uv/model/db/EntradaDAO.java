@@ -1,4 +1,4 @@
-package mx.uv.controller.db;
+package mx.uv.model.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

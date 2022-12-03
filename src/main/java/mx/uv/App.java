@@ -2,18 +2,15 @@ package mx.uv;
 
 import static spark.Spark.*;
 
-import java.io.Console;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import mx.uv.controller.db.EntradaDAO;
-import mx.uv.controller.db.UsuarioDAO;
+import mx.uv.model.db.EntradaDAO;
+import mx.uv.model.db.UsuarioDAO;
 import mx.uv.model.Entrada;
-import mx.uv.model.SensacionDescanso;
 import mx.uv.model.Usuario;
 /**
  * Hello world!
