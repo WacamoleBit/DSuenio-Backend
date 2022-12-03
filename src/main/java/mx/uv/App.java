@@ -10,7 +10,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import mx.uv.controller.db.EntradaDAO;
 import mx.uv.controller.db.UsuarioDAO;
+import mx.uv.model.Entrada;
+import mx.uv.model.SensacionDescanso;
 import mx.uv.model.Usuario;
 /**
  * Hello world!
@@ -46,14 +49,32 @@ public class App
             // Usuario usuario = gson.fromJson(datos, Usuario.class);
             JsonElement arbol = JsonParser.parseString(req.body());
             JsonObject peticion = arbol.getAsJsonObject();
-            UsuarioDAO dao = new UsuarioDAO();
             Usuario usuario = new Usuario();
 
             usuario.setUsuario(peticion.get("usuario").getAsString());
             usuario.setContrasenia(peticion.get("contrasenia").getAsString());
+            usuario.setRecontrasenia(peticion.get("recontrasenia").getAsString());
             usuario.setEmail(peticion.get("email").getAsString());
+            
 
-            return dao.crearUsuario(usuario);
+            return UsuarioDAO.crearUsuario(usuario);
+        });
+
+        get("/iniciarSesion", (req, res) -> gson.toJson(UsuarioDAO.iniciarSesion("manueeel", "manuel_PW")));
+
+        post("/crearEntrada", (req, res) -> {
+            JsonElement arbol = JsonParser.parseString(req.body());
+            JsonObject peticion = arbol.getAsJsonObject();
+            Entrada entrada = new Entrada();
+
+            entrada.setUsuario(peticion.get("usuario").getAsInt());
+            entrada.setFechaCreacion(peticion.get("fechaCreacion").getAsString());
+            entrada.setHorasDormidas(peticion.get("horasDormidas").getAsInt());
+            entrada.setSensacionDescanso(peticion.get("sensacionDescanso").toString());
+            entrada.setDescripcion(peticion.get("descripcion").getAsString());
+            entrada.setaDestacar(peticion.get("aDestacar").getAsString());
+
+            return EntradaDAO.crearEntrada(entrada);
         });
     }
 }

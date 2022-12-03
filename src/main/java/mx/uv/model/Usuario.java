@@ -4,16 +4,10 @@ public class Usuario {
     private int idUsuario = 0;
     private String usuario = null;
     private String contrasenia = null;
+    private String recontrasenia = null;
     private String email = null;
 
     public Usuario() {}
-
-    public Usuario (int idUsuario, String usuario, String contrasenia, String email) {
-        this.idUsuario = idUsuario;
-        this.usuario = usuario;
-        this.contrasenia = contrasenia;
-        this.email = email;
-    }
 
     public int getIdUsuario() {
         return idUsuario;
@@ -35,11 +29,25 @@ public class Usuario {
         return contrasenia;
     }
 
+    public void setRecontrasenia(String recontrasenia) {
+        this.recontrasenia = recontrasenia;
+    }
+
+    public String getRecontrasenia() {
+        return recontrasenia;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
 
     public String getEmail() {
         return email;
+    }
+
+    @Override
+    public String toString() {
+        String str = getIdUsuario() + " " + getUsuario() + " " + getContrasenia();
+        return str;
     }
 }

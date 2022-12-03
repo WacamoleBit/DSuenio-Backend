@@ -2,13 +2,16 @@ package mx.uv.controller.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import mx.uv.model.Usuario;
 
 public class UsuarioDAO {
-    private Conexion miConn = new Conexion();
+    private static Conexion miConn = new Conexion();
 
-    public boolean crearUsuario(Usuario usuario) {
+    public static boolean crearUsuario(Usuario usuario) {
         PreparedStatement stm = null;
         Connection conn = miConn.getConnection();
         
@@ -42,6 +45,51 @@ public class UsuarioDAO {
                 System.out.println(e);
             }
         }
+        
         return exito;
+    }
+
+    public static Integer iniciarSesion(String nombreUsuario, String contrasenia) {
+        Integer usuario = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        Connection conn = miConn.getConnection();
+
+        try {
+            String sql = "SELECT idUsuario FROM usuario WHERE usuario = ? and contrasenia = ?";
+            stm = conn.prepareStatement(sql);
+            stm.setString(1, nombreUsuario);
+            stm.setString(2, contrasenia);
+            rs = stm.executeQuery();
+
+            if(rs.next()) {
+                usuario = Integer.valueOf(rs.getInt("idUsuario"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            if (rs != null)
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    System.out.println(e);
+                }
+            rs = null;
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+                stm = null;
+            }
+            try {
+                conn.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+        return usuario;
     }
 }
