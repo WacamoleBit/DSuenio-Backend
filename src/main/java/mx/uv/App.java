@@ -3,7 +3,6 @@ package mx.uv;
 import static spark.Spark.*;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -18,6 +17,7 @@ import mx.uv.model.Usuario;
  */
 public class App 
 {
+    private static Integer sesionIniciada = null;
     public static void main(String[] args) {
         Gson gson = new Gson();
 
@@ -38,12 +38,10 @@ public class App
 
             return "OK";
         });
+
         before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
-        // before((req, res) -> res.type("application/json"));
-        
         
         post("/crearCuenta", (req, res) -> {
-            // Usuario usuario = gson.fromJson(datos, Usuario.class);
             JsonElement arbol = JsonParser.parseString(req.body());
             JsonObject peticion = arbol.getAsJsonObject();
             Usuario usuario = new Usuario();
@@ -52,12 +50,20 @@ public class App
             usuario.setContrasenia(peticion.get("contrasenia").getAsString());
             usuario.setRecontrasenia(peticion.get("recontrasenia").getAsString());
             usuario.setEmail(peticion.get("email").getAsString());
-            
 
             return UsuarioDAO.crearUsuario(usuario);
         });
 
-        get("/iniciarSesion", (req, res) -> gson.toJson(UsuarioDAO.iniciarSesion("manueeel", "manuel_PW")));
+        get("/iniciarSesion", (req, res) -> {
+            JsonElement arbol = JsonParser.parseString(req.body());
+            JsonObject peticion = arbol.getAsJsonObject();
+            String usuario = peticion.get("usuario").getAsString();
+            String contrasenia = peticion.get("contrasenia").getAsString();
+
+            Integer sesion = UsuarioDAO.iniciarSesion(usuario, contrasenia);
+
+            return empezarSesion(sesion);
+        });
 
         post("/crearEntrada", (req, res) -> {
             JsonElement arbol = JsonParser.parseString(req.body());
@@ -73,5 +79,33 @@ public class App
 
             return EntradaDAO.crearEntrada(entrada);
         });
+
+        get("/cargarEntradas", (req, res) -> {
+            return gson.toJson(EntradaDAO.getEntradas(sesionIniciada));
+        });
+
+        get("/cargarDescripcion", (req, res) -> {
+            JsonElement arbol = JsonParser.parseString(req.body());
+            JsonObject peticion = arbol.getAsJsonObject();
+            Integer entrada = peticion.get("idEntrada").getAsInt();
+            
+            return gson.toJson(EntradaDAO.getDescripcipon(entrada));
+        });
+
+        get("/cerrarSesion", (req, res) -> {
+            return cerrarSesion();
+        });
+    }
+
+    static boolean empezarSesion(Integer sesion) {
+        sesionIniciada = sesion;
+
+        return sesionIniciada != null;
+    }
+
+    static boolean cerrarSesion() {
+        sesionIniciada = null;
+
+        return sesionIniciada == null;
     }
 }
