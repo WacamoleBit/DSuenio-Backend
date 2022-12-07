@@ -5,10 +5,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexion {
+    ProcessBuilder processBuilder = new ProcessBuilder();
+
     private String url = "jdbc:mysql://127.0.0.1:3306/dsuenio";
     private String driverName = "com.mysql.cj.jdbc.Driver"; // com.mysql.cj.jdbc.Driver
-    private String username = "dsadmin";
-    private String password = "dsadmin_PW";
+    private String username = processBuilder.environment().get("USERDB");
+    private String password = processBuilder.environment().get("PASSDB");
     
     private Connection connection = null;
 

@@ -21,7 +21,7 @@ public class App
     public static void main(String[] args) {
         Gson gson = new Gson();
 
-        port(80);
+        port(getAssignedPort());
 
         options("/*", (request, response) -> {
             String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
@@ -95,6 +95,14 @@ public class App
         get("/cerrarSesion", (req, res) -> {
             return cerrarSesion();
         });
+    }
+
+    static int getAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 4567;
     }
 
     static boolean empezarSesion(Integer sesion) {
