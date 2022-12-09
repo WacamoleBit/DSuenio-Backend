@@ -2,6 +2,8 @@ package mx.uv;
 
 import static spark.Spark.*;
 
+import java.time.LocalDate;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -54,7 +56,7 @@ public class App
             return UsuarioDAO.crearUsuario(usuario);
         });
 
-        get("/iniciarSesion", (req, res) -> {
+        post("/iniciarSesion", (req, res) -> {
             JsonElement arbol = JsonParser.parseString(req.body());
             JsonObject peticion = arbol.getAsJsonObject();
             String usuario = peticion.get("usuario").getAsString();
@@ -69,13 +71,14 @@ public class App
             JsonElement arbol = JsonParser.parseString(req.body());
             JsonObject peticion = arbol.getAsJsonObject();
             Entrada entrada = new Entrada();
+            LocalDate fechaCreacion = LocalDate.now();
 
-            entrada.setUsuario(peticion.get("usuario").getAsInt());
-            entrada.setFechaCreacion(peticion.get("fechaCreacion").getAsString());
-            entrada.setHorasDormidas(peticion.get("horasDormidas").getAsInt());
-            entrada.setSensacionDescanso(peticion.get("sensacionDescanso").toString());
-            entrada.setDescripcion(peticion.get("descripcion").getAsString());
-            entrada.setaDestacar(peticion.get("aDestacar").getAsString());
+            entrada.setUsuario(sesionIniciada);
+            entrada.setFechaCreacion(String.valueOf(fechaCreacion));
+            entrada.setHorasDormidas(peticion.get("horas").getAsInt());
+            entrada.setSensacionDescanso(peticion.get("descanso").getAsInt());
+            entrada.setDescripcion(peticion.get("descripcion").toString());
+            entrada.setaDestacar(peticion.get("aDestacar").toString());
 
             return EntradaDAO.crearEntrada(entrada);
         });

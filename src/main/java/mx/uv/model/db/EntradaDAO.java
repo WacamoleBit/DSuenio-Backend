@@ -23,9 +23,9 @@ public class EntradaDAO {
                 "sensacionDescanso, descripcion, aDestacar) values (?, ?, ?, ?, ?, ?);";
             stm = conn.prepareStatement(sql);
             stm.setInt(1, entrada.getUsuario());
-            stm.setString(0, entrada.getFechaCreacion());
+            stm.setString(2, entrada.getFechaCreacion());
             stm.setInt(3, entrada.getHorasDormidas());
-            stm.setString(4, entrada.getSensacionDescanso().toString());
+            stm.setInt(4, entrada.getSensacionDescanso());
             stm.setString(5, entrada.getDescripcion());
             stm.setString(6, entrada.getaDestacar());
 
@@ -60,7 +60,7 @@ public class EntradaDAO {
         Connection conn = miConn.getConnection();
 
         try {
-            String sql ="SELECT idEntrada, fechaCreacion, horasDormidas, sensacionDescanso, aDescansar FROM entrada " +
+            String sql ="SELECT idEntrada, fechaCreacion, horasDormidas, sensacionDescanso, aDestacar FROM entrada " +
             "WHERE usuario = ?";
             stm = conn.prepareStatement(sql);
             stm.setInt(1, usuario);

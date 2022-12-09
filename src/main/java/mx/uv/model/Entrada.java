@@ -5,9 +5,11 @@ public class Entrada {
     private int usuario = 0;
     private String fechaCreacion = null;
     private int horasDormidas = 0;
-    private String sensacionDescanso = null;
+    private int sensacionDescanso = 0;
     private String descripcion = null;
     private String aDestacar = null;
+
+    public Entrada() {}
 
     public int getIdEntrada() {
         return idEntrada;
@@ -41,11 +43,11 @@ public class Entrada {
         this.horasDormidas = horasDormidas;
     }
 
-    public String getSensacionDescanso() {
+    public int getSensacionDescanso() {
         return sensacionDescanso;
     }
 
-    public void setSensacionDescanso(String sensacionDescanso) {
+    public void setSensacionDescanso(int sensacionDescanso) {
         this.sensacionDescanso = sensacionDescanso;
     }
 
