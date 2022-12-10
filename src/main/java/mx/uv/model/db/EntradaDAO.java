@@ -60,7 +60,7 @@ public class EntradaDAO {
         Connection conn = miConn.getConnection();
 
         try {
-            String sql ="SELECT idEntrada, fechaCreacion, horasDormidas, sensacionDescanso, aDestacar FROM entrada " +
+            String sql ="SELECT idEntrada, fechaCreacion, horasDormidas, sensacionDescanso, descripcion, aDestacar FROM entrada " +
             "WHERE usuario = ?";
             stm = conn.prepareStatement(sql);
             stm.setInt(1, usuario);
@@ -71,6 +71,7 @@ public class EntradaDAO {
                 entrada.setIdEntrada(rs.getInt("idEntrada"));
                 entrada.setFechaCreacion(rs.getString("fechaCreacion"));
                 entrada.setHorasDormidas(rs.getInt("horasDormidas"));
+                entrada.setDescripcion(rs.getString("descripcion"));
                 entrada.setaDestacar(rs.getString("aDestacar"));
 
                 lista.add(entrada);

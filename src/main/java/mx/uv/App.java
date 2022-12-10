@@ -50,7 +50,6 @@ public class App
 
             usuario.setUsuario(peticion.get("usuario").getAsString());
             usuario.setContrasenia(peticion.get("contrasenia").getAsString());
-            usuario.setRecontrasenia(peticion.get("recontrasenia").getAsString());
             usuario.setEmail(peticion.get("email").getAsString());
 
             return UsuarioDAO.crearUsuario(usuario);
@@ -61,8 +60,9 @@ public class App
             JsonObject peticion = arbol.getAsJsonObject();
             String usuario = peticion.get("usuario").getAsString();
             String contrasenia = peticion.get("contrasenia").getAsString();
+            Integer sesion = null;
 
-            Integer sesion = UsuarioDAO.iniciarSesion(usuario, contrasenia);
+            sesion = UsuarioDAO.iniciarSesion(usuario, contrasenia);
 
             return empezarSesion(sesion);
         });
@@ -87,12 +87,12 @@ public class App
             return gson.toJson(EntradaDAO.getEntradas(sesionIniciada));
         });
 
-        get("/cargarDescripcion", (req, res) -> {
+        post("/cambiarContrasenia", (req, res) -> {
             JsonElement arbol = JsonParser.parseString(req.body());
             JsonObject peticion = arbol.getAsJsonObject();
-            Integer entrada = peticion.get("idEntrada").getAsInt();
-            
-            return gson.toJson(EntradaDAO.getDescripcipon(entrada));
+            String contrasenia = peticion.get("contrasenia").getAsString();
+
+            return UsuarioDAO.cambiarContrasenia(sesionIniciada, contrasenia);
         });
 
         get("/cerrarSesion", (req, res) -> {
